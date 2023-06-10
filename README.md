@@ -44,10 +44,10 @@ if __name__ == '__main__':
 ```
 
 Methods:
-`connect_client` - Actions to do when client connects
-`disconnect_client` - Actions to do when client disconnects
-`on_receive` - Actions to do when server receives message from client
-`on_send` - Actions to do when server sends message to client
+`connect_client` - Actions to do when client connects,
+`disconnect_client` - Actions to do when client disconnects,
+`on_receive` - Actions to do when server receives message from client,
+`on_send` - Actions to do when server sends message to client,
 
 Added some functionality:
 
