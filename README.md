@@ -37,7 +37,7 @@ class EchoServer(TCPServer):
         ...
 
 if __name__ == '__main__':
-    server = EchoServer(port=5678)
+    server = EchoServer(('', 3000))
     
     while True:
         server.proceed()
@@ -82,7 +82,7 @@ class EchoServer(TCPServer):
             return b''
 
 if __name__ == '__main__':
-    server = EchoServer(port=5678)
+    server = EchoServer(('', 3000))
     
     while True:
         server.proceed()
@@ -107,7 +107,7 @@ class MyClient(Client):
         return super().on_receive(data)
     
 if __name__ == '__main__':
-    cl = MyClient(hostname='127.0.0.1', port=5678)
+    cl = MyClient(('', 3000))
     while True:
         cl.send(b'')
         cl.proceed()
