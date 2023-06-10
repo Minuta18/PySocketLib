@@ -7,18 +7,19 @@ from PySocketLib.Client import ConnectedClient
 class Server:
     '''Simple socket server'''
     def __init__(self, 
-        host: str='0.0.0.0',
-        port: int=8000,
+        addr: tuple,
     ):
-        if port <= 1023:
-            raise UnablePort("Can't use priviliged port {}" % port)
-        self.__host = host
-        self.__port = port
-        
         self.__socket_selector = selectors.DefaultSelector()
-
-        self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__socket.bind((host, port))
+        
+        self.__socket = None
+        if len(addr) == 2:
+            self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        elif len(addr) == 4:
+            self.__socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0)
+        else:
+            raise ValueError(f"Invalid address: {addr}")
+        
+        self.__socket.bind(addr)
         self.__socket.listen()
         self.__socket.setblocking(False)
         self.__socket_selector.register(self.__socket, selectors.EVENT_READ)

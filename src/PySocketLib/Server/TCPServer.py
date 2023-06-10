@@ -9,10 +9,9 @@ from PySocketLib.Client import ConnectedClient
 class TCPServer(Server):
     '''Simple TCP server'''
     def __init__(self, 
-        host: str='0.0.0.0',
-        port: int=8000,
+        addr: tuple,
     ):
-        super().__init__(host, port)
+        super().__init__(addr)
 
     def connect_client(self, sock: socket.socket) -> ConnectedClient:
         return super().connect_client(sock)

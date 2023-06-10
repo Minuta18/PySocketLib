@@ -3,14 +3,16 @@ import socket
 class Client:
     '''Simple socket client'''
     def __init__(self, 
-        hostname: str='0.0.0.0', 
-        port: int=8000,
+        addr: tuple,
     ):
-        self.__hostname = hostname
-        self.__port = port
-
-        self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__socket.connect((self.__hostname, self.__port))
+        self.__socket = None
+        if len(addr) == 2:
+            self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        elif len(addr) == 4:
+            self.__socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+        else:
+            raise ValueError(f"Invalid address: {addr}")
+        self.__socket.connect(addr)
 
     def __del__(self):
         self.__socket.close()
