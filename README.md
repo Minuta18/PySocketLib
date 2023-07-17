@@ -1,17 +1,18 @@
 # PySocketLib
 
-PySocketLib is a Python library to simplify working with sockets.
+PySocketLib is a free and open-source cross-platform library to simplify working with sockets. Windows, MacOS and Linux are supported. Installation:
+
+```bash
+pip install PySocketLib
+```
 
 ## Features
 
-- TCP servers
-- TCP clients
+- TCP, UDP
 - IPv4 and IPv6 support
 
-## Ideas and Issues
+## Resources
 
-Please, write your feedback, ideas or issues [there](https://github.com/Minuta18/PySocketLib/issues). Or, go to the "Issues" tab in github.
-
-## Documentation
-
-Documentation is available at "Wiki" tab in github. Or go [there](https://github.com/Minuta18/PySocketLib/wiki)
+Github of the project - [https://github.com/Minuta18/PySocketLib](https://github.com/Minuta18/PySocketLib)
+Please, write your feedback, ideas or issues [there](https://github.com/Minuta18/PySocketLib/issues) ("Issues" tab in github)
+Documentation is available at [https://github.com/Minuta18/PySocketLib/wiki](https://github.com/Minuta18/PySocketLib/wiki)

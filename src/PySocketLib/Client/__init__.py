@@ -1,2 +1,4 @@
 from .Client import Client
-from .ConnectedClient import ConnectedClient
+from .TCPClient import TCPClient
+from .UDPClient import UDPClient
+from .ConnectedClient import ConnectedClient, ConnectedTCPClient, ConnectedUDPClient

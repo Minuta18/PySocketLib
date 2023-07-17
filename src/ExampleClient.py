@@ -1,18 +1,13 @@
-from PySocketLib.Client import Client
+from PySocketLib.Client import UDPClient
 
-class MyClient(Client):
-    def send(self, data: bytes):
-        data = input('You: ')
-
-        return super().send(data)
-    
+class MyClient(UDPClient):
     def on_receive(self, data: bytes):
         print('Server: ' + str(data))
 
         return super().on_receive(data)
     
 if __name__ == '__main__':
-    cl = MyClient(('', 3000, 0, 0))
+    cl = MyClient(('127.0.0.1', 3000))
     while True:
-        cl.send(b'')
+        cl.send(bytes(input('You: '), encoding='utf-8'))
         cl.proceed()

@@ -1,6 +1,6 @@
 [project]
 name = "PySocketLib"
-version = "0.2.2"
+version = "0.3"
 authors = [
   { name="Samsonov Igor", email="ig.samsonov10@yandex.ru" },
 ]

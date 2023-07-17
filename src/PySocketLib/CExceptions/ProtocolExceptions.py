@@ -1,5 +1,2 @@
-class InvalidIP(Exception):
-    ...
-
-class UndefinedIP(Exception):
+class InvalidAddr(Exception):
     ...

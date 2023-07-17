@@ -1,34 +1,32 @@
 import socket
+from PySocketLib.Utility.Protocol import Protocol
+from abc import ABC, abstractmethod
 
 class Client:
     '''Simple socket client'''
     def __init__(self, 
         addr: tuple,
     ):
-        self.__socket = None
-        if len(addr) == 2:
-            self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        elif len(addr) == 4:
-            self.__socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-        else:
-            raise ValueError(f"Invalid address: {addr}")
-        self.__socket.connect(addr)
+        self._addr = addr
 
     def __del__(self):
-        self.__socket.close()
+        pass
 
-    def __service_connection(self):
-        recv_data = self.__socket.recv(1024)
-        self.on_receive(recv_data)
+    @abstractmethod
+    def _service_connection(self):
+        pass
 
-    def send(self, data: bytes):
+    def on_send(self, data: bytes):
         '''Actions to do when sending data'''
-        self.__socket.sendall(bytes(data, encoding='utf-8'))
         return data
 
     def on_receive(self, data: bytes):
         '''Actions to do when receiving data'''
         return data
     
+    @abstractmethod
+    def send(self, data: bytes):
+        pass
+    
     def proceed(self):
-        self.__service_connection()
+        self._service_connection()
