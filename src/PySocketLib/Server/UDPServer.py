@@ -69,6 +69,7 @@ class UDPServer(Server):
         )
         self._messages.append(new_message)
         self._server_socket.sendto(edited_data, client.addr)
+        return new_message
 
     def proceed(self):
         self._service_connection()
