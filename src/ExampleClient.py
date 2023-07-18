@@ -1,6 +1,6 @@
-from PySocketLib.Client import UDPClient
+from PySocketLib.Client import TCPClient
 
-class MyClient(UDPClient):
+class MyClient(TCPClient):
     def on_receive(self, data: bytes):
         print('Server: ' + str(data))
 

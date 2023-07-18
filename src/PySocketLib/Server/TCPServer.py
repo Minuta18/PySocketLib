@@ -12,14 +12,16 @@ class TCPServer(Server):
     def __init__(self,
         addr: tuple,             
         package_size: int=1024,
+        use_ipv6: bool=False,
     ):
         try:
             self._ip_addr, self._port = addr
             self._addr = addr
+            self._ipv6_using = use_ipv6
             self.package_size = package_size
         except ValueError as e:
             raise ValueError('Invalid address')
-        self._server_socket = self._server_socket_setup(addr)
+        self._server_socket = self._server_socket_setup(addr, use_ipv6=use_ipv6)
         self._socket_selector = self._selector_setup(self._server_socket)
         self._clients = dict()
         self._messages = list()
@@ -55,14 +57,12 @@ class TCPServer(Server):
                     self.get_date(),
                 ))
 
-    def _server_socket_setup(self, addr: tuple) -> socket.socket:
+    def _server_socket_setup(self, addr: tuple, use_ipv6=False) -> socket.socket:
         sock = None
-        if len(addr) == 2:
+        if not use_ipv6:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        elif len(addr) == 4:
-            sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0)
         else:
-            raise ValueError(f'Invalid address: {addr}')
+            sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0)
         
         sock.bind(addr)
         sock.listen()
