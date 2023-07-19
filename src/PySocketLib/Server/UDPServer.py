@@ -31,9 +31,9 @@ class UDPServer(Server):
     def _server_socket_setup(self, addr: tuple, use_ipv6=False) -> socket.socket:
         sock = None
         if not use_ipv6:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         else:
-            sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM, 0)
+            sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM, 0)
         sock.bind(addr)
 
         return sock
