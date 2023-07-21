@@ -1,5 +1,6 @@
 import socket
 from PySocketLib.Utility.Protocol import Protocol
+from PySocketLib.Server.TCPServer import Message
 from abc import ABC, abstractmethod
 
 class Client:
@@ -8,6 +9,7 @@ class Client:
         addr: tuple,
     ):
         self._addr = addr
+        self.messages = list()
 
     def __del__(self):
         pass
@@ -28,5 +30,17 @@ class Client:
     def send(self, data: bytes):
         pass
     
+    def get_messages(self) -> list[Message]:
+        return self.messages
+    
+    def get_messages_from_server(self) -> list[Message]:
+        return [msg for msg in self.messages if msg.from_ == self._addr]
+    
+    def get_messages_from_client(self) -> list[Message]: 
+        return [msg for msg in self.messages if msg.from_ != self._addr]
+
     def proceed(self):
         self._service_connection()
+
+    def get_date(self):
+        return ''

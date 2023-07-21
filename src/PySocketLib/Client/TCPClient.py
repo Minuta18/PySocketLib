@@ -1,6 +1,7 @@
 from . import Client
 from PySocketLib.Utility.Protocol import Protocol
 from PySocketLib.CExceptions.RunTime import ServiceUnavailableException
+from PySocketLib.Server.TCPServer import Message
 import socket
 
 class TCPClient(Client):
@@ -14,7 +15,9 @@ class TCPClient(Client):
             self._socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         else:
             raise ValueError(f"Invalid address: {addr}")
+        self._addr = addr
         self._socket.connect(addr)
+        self.messages = list()
         # self._socket.setblocking(False)
 
     def __del__(self):
@@ -22,7 +25,13 @@ class TCPClient(Client):
 
     def _service_connection(self):
         recv_data = self._socket.recv(1024)
-        self.on_receive(recv_data)
+        edit_data = self.on_receive(recv_data)
+        self.messages.append(Message(
+            self._socket.getsockname(),
+            self._addr,
+            edit_data,
+            self.get_date(),
+        ))
 
     def on_send(self, data: bytes):
         '''Actions to do when sending data'''
@@ -33,7 +42,14 @@ class TCPClient(Client):
         return data
 
     def send(self, data: bytes):
-        self._socket.sendall(self.on_send(data))
+        edit_data = self.on_send(data)
+        self._socket.sendall(edit_data)
+        self.messages.append(Message(
+            self._addr,
+            self._socket.getsockname(),
+            edit_data,
+            self.get_date(),
+        ))
     
     def proceed(self):
         try:
