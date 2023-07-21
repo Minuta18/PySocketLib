@@ -40,9 +40,16 @@ class Client:
     
     def get_messages_from_client(self) -> list[Message]: 
         return [msg for msg in self.messages if msg.from_ != self._addr]
+    
+    def clear_messages(self):
+        self.messages = list()
 
     def proceed(self):
         self._service_connection()
 
     def get_date(self):
         return ''
+    
+    @abstractmethod
+    def proceed(self):
+        pass
