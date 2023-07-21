@@ -7,6 +7,8 @@ class Client:
     '''Simple socket client'''
     def __init__(self, 
         addr: tuple,
+        package_size: int=1024,
+        use_ipv6: bool=False,
     ):
         self._addr = addr
         self.messages = list()

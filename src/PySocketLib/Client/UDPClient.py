@@ -7,17 +7,17 @@ import socket
 class UDPClient(Client):
     def __init__(self,
         addr: tuple,
-        package_size: int=1024,             
+        package_size: int=1024,    
+        use_ipv6: bool=False,         
     ):
         self.package_size = package_size
         self.server_addr = addr
         self._socket = None
-        if len(addr) == 2:
+        self._use_ipv6 = use_ipv6
+        if use_ipv6:
             self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        elif len(addr) == 4:
+        else:
             self._socket = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-        else: 
-            raise ValueError(f"Invalid address: {addr}")
         self._socket.connect(addr)
         self.messages = list()
 

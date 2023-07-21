@@ -6,15 +6,17 @@ import socket
 
 class TCPClient(Client):
     def __init__(self,
-        addr: tuple,             
+        addr: tuple,       
+        package_size: int=1024,
+        use_ipv6: bool=False,      
     ):
         self._socket = None
-        if len(addr) == 2:
+        self._use_ipv6 = use_ipv6
+        self.package_size = package_size
+        if use_ipv6:
             self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        elif len(addr) == 4:
-            self._socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         else:
-            raise ValueError(f"Invalid address: {addr}")
+            self._socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         self._addr = addr
         self._socket.connect(addr)
         self.messages = list()
@@ -24,7 +26,7 @@ class TCPClient(Client):
         self._socket.close()
 
     def _service_connection(self):
-        recv_data = self._socket.recv(1024)
+        recv_data = self._socket.recv(self.package_size)
         edit_data = self.on_receive(recv_data)
         self.messages.append(Message(
             self._socket.getsockname(),
